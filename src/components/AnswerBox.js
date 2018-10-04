@@ -34,7 +34,12 @@ export default class AnswerBox extends Component {
     return (
       <div className="AnswerBox">
         {this.props.breeds.map(breed => (
-          <span id={breed} key={breed} onClick={this.handleClick}>
+          <span
+            className="Answers"
+            id={breed}
+            key={breed}
+            onClick={this.handleClick}
+          >
             {breed}
           </span>
         ))}

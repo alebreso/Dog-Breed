@@ -46,7 +46,9 @@ class Question extends Component {
     console.log(this.state);
     return (
       <div>
-        <img className="question" alt="" src={urlRandomImage} />
+        <div className="question">
+          <img alt="" src={urlRandomImage} />
+        </div>
         <AnswerBox
           breeds={breeds1}
           urlRandomImage={urlRandomImage}

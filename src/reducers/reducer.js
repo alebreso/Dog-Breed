@@ -10,16 +10,11 @@ const reducer = (state = initState, action = {}) => {
     case "RIGHT_ANSWER":
       return action.payload.counterQuestion;
     case "LOAD_IMG":
-      return Object.assign({ images: action.payload });
+      return { images: action.payload };
     case "LOAD_BREEDS":
       return Object.assign({ breeds: action.payload }, state);
-    case "COUNTER_QUESTION++": {
-      const objCopied = { ...state };
-      objCopied.counterQuestion += 1;
-      return objCopied;
-    }
-
-    //return Object.assign({ counterQuestion: action.payload + 1 }, state);
+    case "COUNTER_QUESTION++":
+      return Object.assign({ counterQuestion: action.payload + 1 }, state);
     default:
       return state;
   }
