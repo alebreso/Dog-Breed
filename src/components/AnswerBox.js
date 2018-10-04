@@ -1,32 +1,26 @@
-import React, { Component } from "react";
+import React, { Component } from "react"; 
 import store from "../store";
-import Question from "./Question";
+import { connect } from 'react-redux'
 
-export default class AnswerBox extends Component {
+
+class AnswerBox extends Component {
   handleClick = e => {
-    console.log(e.target.id);
-    console.log(this.props.urlRandomImage);
     const id = e.target.id;
     const image = this.props.urlRandomImage;
-    const counterQuestion = store.getState();
-    console.log(counterQuestion.counterQuestion);
-    const c = counterQuestion.counterQuestion;
     if (image.includes(id)) {
-      console.log("Right Answer");
-      // store.dispatch({
-      //   type: "RIGHT_ANSWER",
-      //   payload: counterQuestion
-      // });
+      //const percentage = this.
       store.dispatch({
-        type: "COUNTER_QUESTION++",
-        payload: c
-      });
-
+        type:"COUNTER_WINS",
+        payload: this.props.counterWins
+      })
+      // store.dispatch({
+      //   type:"PERCENTAGE",
+      //   payload: myCounterWins
+      // })
       this.props.fetchData();
     } else {
       console.log("Wrong Answer");
-      if (!image.includes(id)) {
-      }
+      setTimeout(this.props.fetchData(),3000)
     }
   };
 
@@ -38,34 +32,20 @@ export default class AnswerBox extends Component {
             className="Answers"
             id={breed}
             key={breed}
-            onClick={this.handleClick}
-          >
+            onClick={this.handleClick}>
             {breed}
           </span>
         ))}
       </div>
-
-      // <span
-      //   className="boxOne"
-      //   id={this.props.breeds[0]}
-      //   onClick={this.handleClick}
-      // >
-      //   {this.props.breeds[0]}
-      // </span>
-      // <span
-      //   className="boxTwo"
-      //   id={this.props.breeds[1]}
-      //   onClick={this.handleClick}
-      // >
-      //   {this.props.breeds[1]}
-      // </span>
-      // <span
-      //   className="boxThree"
-      //   id={this.props.breeds[2]}
-      //   onClick={this.handleClick}
-      // >
-      //   {this.props.breeds[2]}
-      // </span>
     );
   }
 }
+
+const mapStateToProps = (state) => {
+	return{
+		counterWins: state.counterReducer.counterWins || 0,
+		counterQuestions: state.counterReducer.counterQuestion || 0
+	}
+}
+
+export default connect(mapStateToProps)(AnswerBox)

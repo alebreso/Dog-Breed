@@ -8,7 +8,6 @@ class App extends Component {
       <div className="App">
         <h1 className="Title">Dog Breed Game</h1>
         <Question />
-        <main />
       </div>
     );
   }
