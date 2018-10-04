@@ -1,27 +1,29 @@
 import React, { Component } from "react";
 import request from "superagent";
+import AnswerBox from "./AnswerBox";
+import { connect } from "react-redux";
+import store from "../store";
 
-export default class Question extends Component {
+class Question extends Component {
   state = {
-    images: [],
-    breeds: []
+    images: []
   };
-
-  componentDidMount() {
+  fetchData = () => {
     request
       .get("https://dog.ceo/api/breeds/image/random/3")
       .then(response => this.setState({ images: response.body.message }))
-      // imgs.push(response.body.message);
       .catch(console.error);
+  };
+  componentDidMount() {
+    this.fetchData();
   }
-  getBreedsFromUrl = () => {
-    console.log(this.state);
-    let imgs = this.state.images;
-    console.log(imgs);
-    let ab = imgs.map(url => url.split("/"));
 
-    let cd = ab.map(str => str[4]);
-    return cd;
+  getBreedsFromUrl = () => {
+    const imageStateArray = this.state.images;
+    const splittedArray = imageStateArray.map(url => url.split("/"));
+    const selectBreedFromArray = splittedArray.map(str => str[4]);
+    // this.setState({ ...this.state, breeds: selectBreedFromArray });
+    return selectBreedFromArray;
   };
 
   getRandomImage = () => {
@@ -29,11 +31,37 @@ export default class Question extends Component {
     return this.state.images[randomIndex];
   };
   render() {
+    const urlRandomImage = this.getRandomImage();
+    const breeds1 = this.getBreedsFromUrl();
+    const obj = store.getState();
+    store.dispatch({
+      type: "LOAD_IMG",
+      payload: urlRandomImage
+    });
+    store.dispatch({
+      type: "LOAD_BREEDS",
+      payload: breeds1
+    });
+
+    console.log(this.state);
     return (
       <div>
-        <img className="question" alt="" src={this.getRandomImage()} />
-        {this.getBreedsFromUrl()}
+        <div className="question">
+          <img alt="" src={urlRandomImage} />
+        </div>
+        <AnswerBox
+          breeds={breeds1}
+          urlRandomImage={urlRandomImage}
+          fetchData={this.fetchData}
+        />
       </div>
     );
   }
 }
+// const mapStateToProps = state => {
+//   return {
+//     reducer: state.reducer
+//     //breeds: state.breeds
+//   };
+// };
+export default connect(null)(Question);
