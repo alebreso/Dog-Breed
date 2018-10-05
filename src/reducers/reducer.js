@@ -1,4 +1,7 @@
-const initState = {};
+const initState = {
+  image: null,
+  breeds: null
+};
 
 const reducer = (state = initState, action ) => {
   switch (action.type) {

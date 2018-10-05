@@ -2,15 +2,14 @@ import React, { Component } from "react";
 import "./App.css";
 import Question from "./components/Question";
 
-class App extends Component {
+export default class App extends Component {
   render() {
-    return (
+    return(
       <div className="App">
-        <h1 className="Title">Dog Breed Game</h1>
+        <h1 className="question">Dog Breed Game</h1>
         <Question />
       </div>
-    );
+    )
   }
 }
 
-export default App;

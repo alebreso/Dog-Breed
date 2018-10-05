@@ -20,6 +20,10 @@ class AnswerBox extends Component {
   };
 
   render() {
+    store.dispatch({
+      type: "LOAD_IMG",
+      payload: this.props.urlRandomImage
+    });
     return (
       <div className="AnswerBox">
         {this.props.breeds.map(breed => (

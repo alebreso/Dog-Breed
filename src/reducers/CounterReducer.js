@@ -1,4 +1,7 @@
-const initState = {};
+const initState = {
+  counterQuestion: 0,
+  counterWins: 0
+};
   
   const counterReducer = (state = initState, action = {}) => {
     switch (action.type) {

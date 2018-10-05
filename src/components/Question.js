@@ -9,27 +9,25 @@ import Score from "./Score"
 class Question extends Component {
   state = {
     images: [],
+    randomImage: null
   };
   fetchData = () => {
     request
       .get("https://dog.ceo/api/breeds/image/random/3")
       .then(response => {
-        this.setState({ images: response.body.message });
+        this.setState({ 
+          images: response.body.message, 
+        });
         this.actionsDispatcher()
       })
       .catch(console.error);
   };
 
   actionsDispatcher = () => {
-    const urlRandomImage = this.getRandomImage();
     const breeds = this.getBreedsFromUrl();
     const myStore = store.getState();
-    let myCounterQuestion = myStore.counterReducer.counterQuestion || 0
+    const myCounterQuestion = myStore.counterReducer.counterQuestion || 0
 
-    store.dispatch({
-      type: "LOAD_IMG",
-      payload: urlRandomImage
-    });
     store.dispatch({
       type: "LOAD_BREEDS",
       payload: breeds
@@ -58,7 +56,7 @@ class Question extends Component {
   }
 
   render() {
-    const urlRandomImage = this.getRandomImage();
+    const urlRandomImage = this.getRandomImage()
     const breeds = this.getBreedsFromUrl();
 
     return (
@@ -78,4 +76,4 @@ class Question extends Component {
 }
 
 
-export default connect(null)(Question);
+export default connect(null)(Question); 
