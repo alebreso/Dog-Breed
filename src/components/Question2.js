@@ -6,7 +6,7 @@ import store from "../store";
 import Score from "./Score"
 
 
-class Question extends Component {
+class Question2 extends Component {
   state = {
     images: [],
   };
@@ -21,8 +21,8 @@ class Question extends Component {
   };
 
   actionsDispatcher = () => {
-    const urlRandomImage = this.getRandomImage();
-    const breeds = this.getBreedsFromUrl();
+    const urlRandomImage = this.state.images;
+    const breeds = this.getBreedFromUrl();
     const myStore = store.getState();
     let myCounterQuestion = myStore.counterReducer.counterQuestion || 0
 
@@ -40,35 +40,38 @@ class Question extends Component {
     });
   }
 
-  getBreedsFromUrl = () => {
+  getBreedFromUrl = () => {
     const imageStateArray = this.state.images;
     const splittedArray = imageStateArray.map(url => url.split("/"));
     const selectBreedFromArray = splittedArray.map(str => str[4]);
-    return selectBreedFromArray;
+    const randomIndex = Math.floor(Math.random()*3)
+    return selectBreedFromArray[randomIndex];
   };
 
-  getRandomImage = () => {
-    const randomIndex = Math.floor(Math.random() * 3);
-    const randomImage = this.state.images[randomIndex];
-    return randomImage;
-  };
+//   getRandomImage = () => {
+//     const randomIndex = Math.floor(Math.random() * 3);
+//     const randomImage = this.state.images[randomIndex];
+//     return randomImage;
+//   };
 
   componentDidMount(){
     this.fetchData()
   }
 
   render() {
-    const urlRandomImage = this.getRandomImage();
-    const breeds = this.getBreedsFromUrl();
+    const urlRandomImages = this.state.images;
+    const breed = this.getBreedFromUrl();
 
     return (
       <div>
         <div className="question">
-          <img alt="" src={urlRandomImage} />
+          <div className="question-breed">
+            <h3>{breed}</h3>
+          </div>
         </div>
         <AnswerBox
-          breeds={breeds}
-          urlRandomImage={urlRandomImage}
+          breed={breed}
+          urlRandomImage={urlRandomImages}
           fetchData={this.fetchData}
         />
         <Score />
@@ -78,4 +81,4 @@ class Question extends Component {
 }
 
 
-export default connect(null)(Question);
+export default connect(null)(Question2);

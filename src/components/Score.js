@@ -9,7 +9,7 @@ class Score extends Component {
       <div className="score-container">
           <div className="counter-questions">Games:{this.props.counterQuestions}</div>
 					<div className="counter-wins">Wins:{this.props.counterWins}</div>
-					<div className="percentuage">{(this.props.counterWins * this.props.counterQuestions)/100}</div>
+					<div className="percentage">Percentage of wins:{Math.floor((this.props.counterWins / this.props.counterQuestions)*100)}</div>
       </div>
     )
   }

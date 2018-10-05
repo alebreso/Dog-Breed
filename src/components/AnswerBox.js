@@ -8,19 +8,14 @@ class AnswerBox extends Component {
     const id = e.target.id;
     const image = this.props.urlRandomImage;
     if (image.includes(id)) {
-      //const percentage = this.
       store.dispatch({
         type:"COUNTER_WINS",
         payload: this.props.counterWins
       })
-      // store.dispatch({
-      //   type:"PERCENTAGE",
-      //   payload: myCounterWins
-      // })
       this.props.fetchData();
     } else {
       console.log("Wrong Answer");
-      setTimeout(this.props.fetchData(),3000)
+      setTimeout(this.props.fetchData,2000)
     }
   };
 
