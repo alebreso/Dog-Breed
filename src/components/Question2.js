@@ -6,28 +6,30 @@ import store from "../store";
 import Score from "./Score"
 
 
-class Question extends Component {
+class Question2 extends Component {
   state = {
     images: [],
-    randomImage: null
   };
-  fetchData = () => {
+  fetchData2 = () => {
     request
       .get("https://dog.ceo/api/breeds/image/random/3")
       .then(response => {
-        this.setState({ 
-          images: response.body.message, 
-        });
+        this.setState({ images: response.body.message });
         this.actionsDispatcher()
       })
       .catch(console.error);
   };
 
   actionsDispatcher = () => {
-    const breeds = this.getBreedsFromUrl();
+    const urlRandomImage = this.state.images;
+    const breeds = this.getBreedFromUrl();
     const myStore = store.getState();
-    const myCounterQuestion = myStore.counterReducer.counterQuestion || 0
+    let myCounterQuestion = myStore.counterReducer.counterQuestion || 0
 
+    store.dispatch({
+      type: "LOAD_IMG",
+      payload: urlRandomImage
+    });
     store.dispatch({
       type: "LOAD_BREEDS",
       payload: breeds
@@ -38,36 +40,32 @@ class Question extends Component {
     });
   }
 
-  getBreedsFromUrl = () => {
+  getBreedFromUrl = () => {
     const imageStateArray = this.state.images;
     const splittedArray = imageStateArray.map(url => url.split("/"));
     const selectBreedFromArray = splittedArray.map(str => str[4]);
-    return selectBreedFromArray;
-  };
-
-  getRandomImage = () => {
-    const randomIndex = Math.floor(Math.random() * 3);
-    const randomImage = this.state.images[randomIndex];
-    return randomImage;
+    const randomIndex = Math.floor(Math.random()*3)
+    return selectBreedFromArray[randomIndex];
   };
 
   componentDidMount(){
-    this.fetchData()
+    this.fetchData2()
   }
 
   render() {
-    const urlRandomImage = this.getRandomImage()
-    const breeds = this.getBreedsFromUrl();
-
+    const urlRandomImages = this.state.images;
+    const breed = this.getBreedFromUrl();
     return (
       <div>
         <div className="question">
-          <img alt="" src={urlRandomImage} />
+          <div className="question-breed">
+            <h3>{breed}</h3>
+          </div>
         </div>
         <AnswerBox
-          breeds={breeds}
-          urlRandomImage={urlRandomImage}
-          fetchData={this.fetchData}
+          breed={breed}
+          urlImages={urlRandomImages}
+          fetchData={this.fetchData2}
         />
         <Score />
       </div>
@@ -76,4 +74,4 @@ class Question extends Component {
 }
 
 
-export default connect(null)(Question); 
+export default connect(null)(Question2);

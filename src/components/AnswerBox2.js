@@ -2,12 +2,11 @@ import React, { Component } from "react";
 import store from "../store";
 import { connect } from 'react-redux'
 
-
 class AnswerBox extends Component {
   handleClick = e => {
-    const id = e.target.id;
-    const image = this.props.urlRandomImage;
-    if (image.includes(id)) {
+    const idUrl= e.target.id;
+    const breed = this.props.breed;
+    if (idUrl.includes(breed)) {
       store.dispatch({
         type:"COUNTER_WINS",
         payload: this.props.counterWins
@@ -20,20 +19,16 @@ class AnswerBox extends Component {
   };
 
   render() {
-    store.dispatch({
-      type: "LOAD_IMG",
-      payload: this.props.urlRandomImage
-    });
     return (
       <div className="AnswerBox">
-        {this.props.breeds.map(breed => (
-          <span
+        {this.props.urlImages.map((url,i) => (
+          <img
+            scr={url}
             className="Answers"
-            id={breed}
-            key={breed}
-            onClick={this.handleClick}>
-            {breed}
-          </span>
+            id={url}
+            alt={url}
+            key={i}
+            onClick={this.handleClick}/>
         ))}
       </div>
     );

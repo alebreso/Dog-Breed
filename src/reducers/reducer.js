@@ -1,20 +1,14 @@
 const initState = {
-  images: null,
-  breeds: null,
-  counterQuestion: 0,
-  counterWins: 0
+  image: null,
+  breeds: null
 };
 
-const reducer = (state = initState, action = {}) => {
+const reducer = (state = initState, action ) => {
   switch (action.type) {
-    case "RIGHT_ANSWER":
-      return action.payload.counterQuestion;
     case "LOAD_IMG":
-      return { images: action.payload };
+      return { ...state, image: action.payload };
     case "LOAD_BREEDS":
-      return Object.assign({ breeds: action.payload }, state);
-    case "COUNTER_QUESTION++":
-      return Object.assign({ counterQuestion: action.payload + 1 }, state);
+      return { ...state, breeds: action.payload };
     default:
       return state;
   }
