@@ -1,0 +1,17 @@
+fetchData = () => {
+    while(this.state.images.length!==3){
+      request
+      .get("https://dog.ceo/api/breeds/image/random")
+      .then(response => {
+        if(this.state.images.filter(img => {
+          return img.split("/")[4] === response.split("/")[4]
+        }).length === 0 )
+        this.setState({ 
+          images: [...this.state.images,response.body.message], 
+        });
+        this.actionsDispatcher()
+      })
+      .catch(console.error);
+    }
+    
+  };

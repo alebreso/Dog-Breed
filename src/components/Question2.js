@@ -10,7 +10,7 @@ class Question2 extends Component {
   state = {
     images: [],
   };
-  fetchData = () => {
+  fetchData2 = () => {
     request
       .get("https://dog.ceo/api/breeds/image/random/3")
       .then(response => {
@@ -48,20 +48,13 @@ class Question2 extends Component {
     return selectBreedFromArray[randomIndex];
   };
 
-//   getRandomImage = () => {
-//     const randomIndex = Math.floor(Math.random() * 3);
-//     const randomImage = this.state.images[randomIndex];
-//     return randomImage;
-//   };
-
   componentDidMount(){
-    this.fetchData()
+    this.fetchData2()
   }
 
   render() {
     const urlRandomImages = this.state.images;
     const breed = this.getBreedFromUrl();
-
     return (
       <div>
         <div className="question">
@@ -71,8 +64,8 @@ class Question2 extends Component {
         </div>
         <AnswerBox
           breed={breed}
-          urlRandomImage={urlRandomImages}
-          fetchData={this.fetchData}
+          urlImages={urlRandomImages}
+          fetchData={this.fetchData2}
         />
         <Score />
       </div>
